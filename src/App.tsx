@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { fetchAvailablePokemon, type Pokemon } from './lib/pokemon'
 import pokemonBg from './assets/pokemonbg.png'
+import sunflowerHeader from './assets/sunflower_header.jpg'
 import './App.css'
 
 function App() {
@@ -63,6 +64,11 @@ function App() {
 
       <main id="top" className="shell">
         <section className="hero" aria-labelledby="hero-brand">
+          <img
+            className="hero-banner"
+            src={sunflowerHeader}
+            alt="Sunflower's 151 Event — September 13, 12-7pm, ticketed only. Fan-made, unofficial event of fun."
+          />
           <div className="pokeball-deco" aria-hidden="true">
             <span className="pokeball-deco-top" />
             <span className="pokeball-deco-button" />
