@@ -1,53 +1,55 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { fetchAvailablePokemon, type Pokemon } from './lib/pokemon'
-import pokemonBg from './assets/pokemonbg.png'
-import sunflowerHeader from './assets/sunflower_header.jpg'
-import './App.css'
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { fetchAvailablePokemon, type Pokemon } from "./lib/pokemon";
+import pokemonBg from "./assets/pokemonbg.png";
+import sunflowerHeader from "./assets/sunflower_header.jpg";
+import "./App.css";
 
 function App() {
-  const [pokemon, setPokemon] = useState<Pokemon[]>([])
-  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
-  const [error, setError] = useState<string | null>(null)
-  const requestId = useRef(0)
+  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">(
+    "loading",
+  );
+  const [error, setError] = useState<string | null>(null);
+  const requestId = useRef(0);
 
   async function loadRoster(showLoading = true) {
-    const id = ++requestId.current
-    if (showLoading) setStatus('loading')
+    const id = ++requestId.current;
+    if (showLoading) setStatus("loading");
 
     try {
-      const roster = await fetchAvailablePokemon()
-      if (id !== requestId.current) return
-      setPokemon(roster)
-      setError(null)
-      setStatus('ready')
+      const roster = await fetchAvailablePokemon();
+      if (id !== requestId.current) return;
+      setPokemon(roster);
+      setError(null);
+      setStatus("ready");
     } catch (err: unknown) {
-      if (id !== requestId.current) return
-      setError(err instanceof Error ? err.message : 'Something went wrong')
-      setStatus('error')
+      if (id !== requestId.current) return;
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      setStatus("error");
     }
   }
 
   useEffect(() => {
-    void loadRoster(true)
+    void loadRoster(true);
 
     function onVisible() {
-      if (document.visibilityState === 'visible') void loadRoster(false)
+      if (document.visibilityState === "visible") void loadRoster(false);
     }
 
-    document.addEventListener('visibilitychange', onVisible)
-    window.addEventListener('focus', onVisible)
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("focus", onVisible);
 
     return () => {
-      requestId.current += 1
-      document.removeEventListener('visibilitychange', onVisible)
-      window.removeEventListener('focus', onVisible)
-    }
-  }, [])
+      requestId.current += 1;
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("focus", onVisible);
+    };
+  }, []);
 
   return (
     <div
       className="page"
-      style={{ '--pokemon-bg': `url(${pokemonBg})` } as CSSProperties}
+      style={{ "--pokemon-bg": `url(${pokemonBg})` } as CSSProperties}
     >
       <div className="bg-pattern" aria-hidden="true" />
 
@@ -58,6 +60,7 @@ function App() {
         <nav className="nav" aria-label="Primary">
           <a href="#fun">The fun</a>
           <a href="#roster">Roster</a>
+          <a href="#join">Join</a>
           <a href="#details">Details</a>
         </nav>
       </header>
@@ -80,7 +83,7 @@ function App() {
             Come join the biggest Pokémon cosplay meetup in the Bay Area!
           </h1>
           <p className="hero-lede">
-            Good vibes, great people, and unforgettable memories — in person!
+            Good vibes, great people, and unforgettable memories!
           </p>
           <div className="hero-actions">
             <a className="btn btn-primary" href="#roster">
@@ -96,14 +99,16 @@ function App() {
           <p className="eyebrow">What&apos;s the plan?</p>
           <h2>Photos, sets, snacks, and chaos (the cute kind).</h2>
           <p className="section-lede">
-            Hosted by Sunflower with coordinators Mimi, Sonic, Dame & Poppy.
+            Hosted by Sunflowercos with coordinators Mimi, Sonic, Dame & Poppy.
             First 3 hours = group photos, videos, catwalk + a little prize. Then
             free roam till 7!
           </p>
           <ul className="fun-list">
-            <li>Themed sets: Ghost, Grass, Water, Team Rocket + a white backdrop</li>
+            <li>
+              Themed sets: Ghost, Grass, Water, Team Rocket + a white backdrop
+            </li>
             <li>Photobooth, activity corner & content corner</li>
-            <li>151 goodie baskets, snacks, water — potluck snacks welcome!</li>
+            <li>151 goodie baskets, snacks, water! Potluck snacks welcome!</li>
           </ul>
         </section>
 
@@ -124,25 +129,25 @@ function App() {
             </button>
           </div>
 
-          {status === 'loading' && (
+          {status === "loading" && (
             <p className="roster-status" role="status">
               Catching roster…
             </p>
           )}
 
-          {status === 'error' && (
+          {status === "error" && (
             <p className="roster-status roster-error" role="alert">
-              {error ?? 'Could not load the roster.'}
+              {error ?? "Could not load the roster."}
             </p>
           )}
 
-          {status === 'ready' && pokemon.length === 0 && (
+          {status === "ready" && pokemon.length === 0 && (
             <p className="roster-status">
               Nobody available yet — check back soon!
             </p>
           )}
 
-          {status === 'ready' && pokemon.length > 0 && (
+          {status === "ready" && pokemon.length > 0 && (
             <ul className="roster-grid">
               {pokemon.map((entry, index) => (
                 <li
@@ -162,7 +167,7 @@ function App() {
                     </div>
                     <figcaption>
                       <span className="dex">
-                        #{String(entry.dex).padStart(3, '0')}
+                        #{String(entry.dex).padStart(3, "0")}
                       </span>
                       <span className="name">{entry.name}</span>
                     </figcaption>
@@ -173,13 +178,78 @@ function App() {
           )}
         </section>
 
+        <section id="join" className="panel how-to-join">
+          <p className="eyebrow">How to join</p>
+          <h2>Wanna cosplay with us?</h2>
+          <p className="section-lede">
+            Three easy steps and you&apos;re in the crew.
+          </p>
+          <ol className="steps-list">
+            <li>
+              <strong>1. Pick a Pokémon</strong>
+              <span>
+                Grab one from the{" "}
+                <a className="text-link" href="#roster">
+                  roster
+                </a>
+                .
+              </span>
+            </li>
+            <li>
+              <strong>2. Message Sunflower</strong>
+              <span>
+                Hit up{" "}
+                <a
+                  className="text-link"
+                  href="https://www.instagram.com/sunflowercos"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  @sunflowercos
+                </a>{" "}
+                on Instagram to request it.
+              </span>
+            </li>
+            <li>
+              <strong>3. Grab your ticket</strong>
+              <span>
+                Buy tickets on the{" "}
+                <a
+                  className="text-link"
+                  href="https://www.eventbrite.com/e/sunflowers-151-event-tickets-1992097300652/protected?aff=oddtdtcreator&utm_source=email&utm_medium=sparkpost&utm_campaign=postpublish"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Eventbrite page
+                </a>
+                .
+              </span>
+            </li>
+          </ol>
+          <div className="hero-actions">
+            <a className="btn btn-primary" href="#roster">
+              Pick from the roster
+            </a>
+            <a
+              className="btn btn-ghost"
+              href="https://www.instagram.com/sunflowercos"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Message @sunflowercos
+            </a>
+          </div>
+        </section>
+
         <section id="details" className="panel join">
           <p className="eyebrow">The details</p>
           <h2>See you there, trainer!</h2>
           <ul className="details-list">
             <li>
               <strong>When</strong>
-              <span>12pm–7pm · Doors 11:30am · Don&apos;t arrive before 11</span>
+              <span>
+                12pm–7pm · Doors 11:30am · Don&apos;t arrive before 11
+              </span>
             </li>
             <li>
               <strong>Where</strong>
@@ -188,10 +258,6 @@ function App() {
             <li>
               <strong>Who</strong>
               <span>18+ only · Ticket required · Free parking</span>
-            </li>
-            <li>
-              <strong>Vibes</strong>
-              <span>Be kind, be patient, have fun — and lastly, have fun!</span>
             </li>
           </ul>
           <a className="btn btn-primary" href="#roster">
@@ -208,7 +274,7 @@ function App() {
         </footer>
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
