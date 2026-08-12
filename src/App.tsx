@@ -60,7 +60,7 @@ function App() {
         <nav className="nav" aria-label="Primary">
           <a href="#fun">What's the plan?</a>
           <a href="#available">Pokemon available</a>
-          <a href="#join">Join</a>
+          <a href="#join"> How to Join</a>
           <a href="#details">Details</a>
         </nav>
       </header>
@@ -96,7 +96,7 @@ function App() {
 
         <section id="fun" className="panel meetup">
           <p className="eyebrow">What&apos;s the plan?</p>
-          <h2>Photos, sets, snacks, and chaos (the cute kind).</h2>
+          <h2>Pokemon Cosplay! Photoshoots! And more!</h2>
           <p className="section-lede">
             Hosted by{" "}
             <a
