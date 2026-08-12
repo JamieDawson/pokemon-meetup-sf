@@ -58,8 +58,8 @@ function App() {
           Sunflower&apos;s 151
         </a>
         <nav className="nav" aria-label="Primary">
-          <a href="#fun">The fun</a>
-          <a href="#roster">Roster</a>
+          <a href="#fun">What's the plan?</a>
+          <a href="#available">Pokemon available</a>
           <a href="#join">Join</a>
           <a href="#details">Details</a>
         </nav>
@@ -77,17 +77,15 @@ function App() {
             <span className="pokeball-deco-button" />
           </div>
           <p id="hero-brand" className="hero-brand">
-            Sunflower&apos;s 151
+            Sunflower&apos;s 151 Event
           </p>
           <h1 className="hero-title">
             Come join the biggest Pokémon cosplay meetup in the Bay Area!
           </h1>
-          <p className="hero-lede">
-            Good vibes, great people, and unforgettable memories!
-          </p>
+
           <div className="hero-actions">
-            <a className="btn btn-primary" href="#roster">
-              Peek the roster
+            <a className="btn btn-primary" href="#available">
+              Chose your Pokémon (to cosplay!)
             </a>
             <a className="btn btn-ghost" href="#details">
               When & where
@@ -99,9 +97,53 @@ function App() {
           <p className="eyebrow">What&apos;s the plan?</p>
           <h2>Photos, sets, snacks, and chaos (the cute kind).</h2>
           <p className="section-lede">
-            Hosted by Sunflowercos with coordinators Mimi, Sonic, Dame & Poppy.
-            First 3 hours = group photos, videos, catwalk + a little prize. Then
-            free roam till 7!
+            Hosted by{" "}
+            <a
+              className="text-link"
+              href="https://www.instagram.com/sunflowercos"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Sunflowercos
+            </a>{" "}
+            with coordinators{" "}
+            <a
+              className="text-link"
+              href="https://www.instagram.com/ai_mimichan/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Mimi
+            </a>
+            ,{" "}
+            <a
+              className="text-link"
+              href="https://www.instagram.com/foreversonic/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Sonic
+            </a>
+            ,{" "}
+            <a
+              className="text-link"
+              href="https://www.instagram.com/dame.cos/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Dame
+            </a>{" "}
+            &{" "}
+            <a
+              className="text-link"
+              href="https://www.instagram.com/poppylop_cos/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Poppy
+            </a>
+            . First 3 hours = group photos, videos, catwalk + a little prize.
+            Then free roam till 7!
           </p>
           <ul className="fun-list">
             <li>
@@ -112,32 +154,31 @@ function App() {
           </ul>
         </section>
 
-        <section id="roster" className="panel roster">
+        <section id="available" className="panel roster">
           <div className="roster-intro">
-            <p className="eyebrow">The roster</p>
+            <p className="eyebrow">Pokemon available</p>
             <h2>Who can you cosplay?</h2>
             <p className="section-lede">
-              These are the Pokémon marked available. Spot yours? Catch that
-              look!
+              These are the Pokémon marked available. Spot yours? Let us know!
             </p>
             <button
               type="button"
               className="btn btn-secondary"
               onClick={() => void loadRoster(true)}
             >
-              Refresh roster
+              Refresh list
             </button>
           </div>
 
           {status === "loading" && (
             <p className="roster-status" role="status">
-              Catching roster…
+              Catching Pokémon…
             </p>
           )}
 
           {status === "error" && (
             <p className="roster-status roster-error" role="alert">
-              {error ?? "Could not load the roster."}
+              {error ?? "Could not load available Pokémon."}
             </p>
           )}
 
@@ -182,15 +223,24 @@ function App() {
           <p className="eyebrow">How to join</p>
           <h2>Wanna cosplay with us?</h2>
           <p className="section-lede">
-            Three easy steps and you&apos;re in the crew.
+            Three easy steps and you&apos;re in the crew. Hop in the{" "}
+            <a
+              className="text-link"
+              href="https://discord.gg/CzZ5WZ4tJ"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Discord
+            </a>{" "}
+            too!
           </p>
           <ol className="steps-list">
             <li>
               <strong>1. Pick a Pokémon</strong>
               <span>
                 Grab one from the{" "}
-                <a className="text-link" href="#roster">
-                  roster
+                <a className="text-link" href="#available">
+                  Pokemon available
                 </a>
                 .
               </span>
@@ -221,14 +271,15 @@ function App() {
                   rel="noreferrer"
                 >
                   Eventbrite page
-                </a>
-                .
+                </a>{" "}
+                You'll get the code for the event page after you message
+                Sunflower. .
               </span>
             </li>
           </ol>
           <div className="hero-actions">
-            <a className="btn btn-primary" href="#roster">
-              Pick from the roster
+            <a className="btn btn-primary" href="#available">
+              Pick a Pokemon
             </a>
             <a
               className="btn btn-ghost"
@@ -237,6 +288,14 @@ function App() {
               rel="noreferrer"
             >
               Message @sunflowercos
+            </a>
+            <a
+              className="btn btn-ghost"
+              href="https://discord.gg/CzZ5WZ4tJ"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Join the Discord
             </a>
           </div>
         </section>
@@ -260,8 +319,8 @@ function App() {
               <span>18+ only · Ticket required · Free parking</span>
             </li>
           </ul>
-          <a className="btn btn-primary" href="#roster">
-            Back to the roster
+          <a className="btn btn-primary" href="#available">
+            Back to Pokemon available
           </a>
         </section>
 

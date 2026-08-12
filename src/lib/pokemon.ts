@@ -104,7 +104,7 @@ function toAvailablePokemon(rows: Record<string, string>[]): Pokemon[] {
 async function fetchFromLocalCsv(): Promise<Pokemon[]> {
   const response = await fetch(LOCAL_CSV_URL, { cache: 'no-store' })
   if (!response.ok) {
-    throw new Error(`Could not load roster (${response.status})`)
+    throw new Error(`Could not load available Pokémon (${response.status})`)
   }
   return toAvailablePokemon(parseCsv(await response.text()))
 }
@@ -113,7 +113,7 @@ async function fetchFromOpenSheet(): Promise<Pokemon[]> {
   // Do not append query params — opensheet returns 400 for them.
   const response = await fetch(OPENSHEET_URL, { cache: 'no-store' })
   if (!response.ok) {
-    throw new Error(`Could not load roster (${response.status})`)
+    throw new Error(`Could not load available Pokémon (${response.status})`)
   }
   return toAvailablePokemon((await response.json()) as Record<string, string>[])
 }
