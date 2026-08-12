@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --mint: #a8d1b1;
+  --mint-deep: #6fa882;
+  --cream: #fffaf3;
+  --cream-soft: rgba(255, 250, 243, 0.92);
+  --ink: #3a2f2a;
+  --ink-soft: #6a5a52;
+  --poke-red: #ef6b6b;
+  --poke-red-deep: #d95454;
+  --poke-yellow: #f6d36b;
+  --poke-sky: #8ec8df;
+  --line: rgba(58, 47, 42, 0.12);
+
+  --display: 'Fredoka', sans-serif;
+  --sans: 'Nunito', sans-serif;
+
+  color: var(--ink-soft);
+  background-color: var(--mint);
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.55;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background-color: var(--mint);
+}
+
+#root {
+  min-height: 100svh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2 {
+  font-family: var(--display);
+  color: var(--ink);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+.btn {
+  font: inherit;
+}
