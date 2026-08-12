@@ -162,13 +162,6 @@ function App() {
             <p className="section-lede">
               These are the Pokémon marked available. Spot yours? Let us know!
             </p>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => void loadRoster(true)}
-            >
-              Refresh list
-            </button>
           </div>
 
           {status === "loading" && (
