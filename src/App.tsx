@@ -86,7 +86,7 @@ function App() {
 
           <div className="hero-actions">
             <a className="btn btn-primary" href="#available">
-              Chose your Pokémon (to cosplay!)
+              Choose your Pokémon (to cosplay!)
             </a>
             <a className="btn btn-ghost" href="#details">
               When & where
