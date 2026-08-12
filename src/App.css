@@ -425,18 +425,21 @@
 
 .footer {
   width: 100%;
-  padding: 0.5rem 0.75rem 1rem;
+  padding: 1.15rem 1.25rem 1.35rem;
   color: var(--ink);
   font-size: 0.9rem;
   font-weight: 700;
-  text-shadow: 0 1px 0 rgba(255, 250, 243, 0.65);
+  background: var(--cream-soft);
+  border: 3px solid rgba(58, 47, 42, 0.1);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 0 rgba(111, 168, 130, 0.2);
 }
 
 .footer-note {
-  margin-top: 0.35rem;
+  margin-top: 0.45rem;
   font-size: 0.78rem;
   font-weight: 600;
-  opacity: 0.8;
+  color: var(--ink-soft);
   max-width: 46ch;
   margin-inline: auto;
 }
