@@ -80,7 +80,8 @@ function App() {
             Sunflower&apos;s 151 Event
           </p>
           <h1 className="hero-title">
-            Come join the biggest Pokémon cosplay meetup in the Bay Area!
+            Come join the biggest Pokémon cosplay meetup in the San Francisco
+            Bay Area!
           </h1>
 
           <div className="hero-actions">
@@ -238,9 +239,9 @@ function App() {
             <li>
               <strong>1. Pick a Pokémon</strong>
               <span>
-                Grab one from the{" "}
+                Choose one from the{" "}
                 <a className="text-link" href="#available">
-                  Pokemon available
+                  Pokemon available in the list
                 </a>
                 .
               </span>
@@ -257,7 +258,8 @@ function App() {
                 >
                   @sunflowercos
                 </a>{" "}
-                on Instagram to request it.
+                on Instagram to request it. You can join the Instagram Chat
+                and/or Discord after.
               </span>
             </li>
             <li>
@@ -273,7 +275,7 @@ function App() {
                   Eventbrite page
                 </a>{" "}
                 You'll get the code for the event page after you message
-                Sunflower. .
+                Sunflower.
               </span>
             </li>
           </ol>
