@@ -307,7 +307,10 @@ function App() {
             </li>
             <li>
               <strong>Where</strong>
-              <span>The State Room · 306 Baden Ave, South San Francisco</span>
+              <span>
+                South San Francisco, CA - Full Address given to people who sign
+                up for the event
+              </span>
             </li>
             <li>
               <strong>Who</strong>
