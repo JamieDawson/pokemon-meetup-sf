@@ -64,9 +64,9 @@ function parsePokemonRow(row: Record<string, string>): Pokemon | null {
 }
 
 function parseCosplayerRow(row: Record<string, string>): Cosplayer | null {
-  const pokemonName = pick(row, /pok.*train/i, /^pok/i, /trainor|trainer/i)
-  const preferredName = pick(row, /preferred/i, /^name$/i)
-  const igTag = pick(row, /ig|instagram|tag/i)
+  const pokemonName = pick(row, /pok.*train/i, /^pokémon\b/i, /^pokemon\b/i, /trainor|trainer/i)
+  const preferredName = pick(row, /preferred/i)
+  const igTag = pick(row, /ig\s*tag/i, /instagram/i, /cosplayer ig/i)
 
   if (!pokemonName) return null
   if (!preferredName && !igTag) return null
@@ -152,6 +152,22 @@ function toPokemonList(rows: Record<string, string>[]): Pokemon[] {
     .sort((a, b) => a.dex - b.dex)
 }
 
+function looksLikeHtml(text: string): boolean {
+  return /^\s*</.test(text) || /<html/i.test(text)
+}
+
+async function fetchText(url: string): Promise<string> {
+  const response = await fetch(url, { cache: 'no-store' })
+  if (!response.ok) {
+    throw new Error(`Could not load sheet (${response.status})`)
+  }
+  const text = await response.text()
+  if (looksLikeHtml(text)) {
+    throw new Error('Sheet endpoint returned HTML instead of data')
+  }
+  return text
+}
+
 async function fetchJsonSheet(url: string): Promise<Record<string, string>[]> {
   const response = await fetch(url, { cache: 'no-store' })
   if (!response.ok) {
@@ -160,18 +176,35 @@ async function fetchJsonSheet(url: string): Promise<Record<string, string>[]> {
   return (await response.json()) as Record<string, string>[]
 }
 
-async function fetchCsvSheet(url: string): Promise<string> {
-  const response = await fetch(url, { cache: 'no-store' })
-  if (!response.ok) {
-    throw new Error(`Could not load sheet (${response.status})`)
+function parseAvailabilityCsv(text: string): Pokemon[] {
+  if (!/available/i.test(text) || !/image/i.test(text)) {
+    throw new Error('Availability CSV missing expected columns')
   }
-  return response.text()
+  const list = toPokemonList(rowsToRecords(parseCsv(text), 0))
+  if (list.length === 0) {
+    throw new Error('Availability CSV parsed to zero Pokémon')
+  }
+  return list
+}
+
+function parseCosplayersCsv(text: string): Cosplayer[] {
+  if (!/ig/i.test(text) || !/pok/i.test(text)) {
+    throw new Error('Cosplayers CSV missing expected columns')
+  }
+  const rows = parseCsv(text)
+  const headerIndex = findHeaderIndex(rows, /pok/i, /preferred|ig/i)
+  const list = rowsToRecords(rows, headerIndex)
+    .map(parseCosplayerRow)
+    .filter((cosplayer): cosplayer is Cosplayer => cosplayer !== null)
+  if (list.length === 0) {
+    throw new Error('Cosplayers CSV parsed to zero cosplayers')
+  }
+  return list
 }
 
 export async function fetchAllPokemon(): Promise<Pokemon[]> {
   try {
-    const text = await fetchCsvSheet(LOCAL_AVAILABILITY_CSV)
-    return toPokemonList(rowsToRecords(parseCsv(text), 0))
+    return parseAvailabilityCsv(await fetchText(LOCAL_AVAILABILITY_CSV))
   } catch {
     return toPokemonList(await fetchJsonSheet(AVAILABILITY_OPENSHEET))
   }
@@ -183,18 +216,18 @@ export async function fetchAvailablePokemon(): Promise<Pokemon[]> {
 
 async function fetchCosplayers(): Promise<Cosplayer[]> {
   try {
-    const text = await fetchCsvSheet(LOCAL_COSPLAYERS_CSV)
-    const rows = parseCsv(text)
-    const headerIndex = findHeaderIndex(rows, /pok/i, /preferred|name/i)
-    return rowsToRecords(rows, headerIndex)
-      .map(parseCosplayerRow)
-      .filter((cosplayer): cosplayer is Cosplayer => cosplayer !== null)
+    return parseCosplayersCsv(await fetchText(LOCAL_COSPLAYERS_CSV))
   } catch {
-    // opensheet may use a messy first row as keys — still try flexible pick()
+    // opensheet uses the sheet's first row as headers (messy on this workbook),
+    // so only use it if we can still extract IG tags.
     const rows = await fetchJsonSheet(COSPLAYERS_OPENSHEET)
-    return rows
+    const list = rows
       .map(parseCosplayerRow)
-      .filter((cosplayer): cosplayer is Cosplayer => cosplayer !== null)
+      .filter((cosplayer): cosplayer is Cosplayer => cosplayer !== null && Boolean(cosplayer.igTag))
+    if (list.length === 0) {
+      throw new Error('Could not load cosplayer IG tags')
+    }
+    return list
   }
 }
 
@@ -209,6 +242,7 @@ export async function fetchClaimedPokemon(): Promise<ClaimedPokemon[]> {
 
   for (const cosplayer of cosplayers) {
     const key = normalizePokemonName(cosplayer.pokemonName)
+    if (!key) continue
     const list = byName.get(key) ?? []
     list.push(cosplayer)
     byName.set(key, list)

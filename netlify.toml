@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Proxy Google Sheets CSV so production gets live data (same as Vite dev proxy).
+# These must stay above the SPA fallback.
+[[redirects]]
+  from = "/api/sheet.csv"
+  to = "https://docs.google.com/spreadsheets/d/1hSrs56BXU-VedniroXwDoZFQo4EWUaOwDArTPQbRgKw/gviz/tq?tqx=out:csv&sheet=Sheet1"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/cosplayers.csv"
+  to = "https://docs.google.com/spreadsheets/d/1gGgvkBuxFtDgiyk5ExJrWmSIFUKwFf2Mhzj0zaIK0mQ/gviz/tq?tqx=out:csv&sheet=Sheet1"
+  status = 200
+  force = true
+
+# React Router (e.g. /whos-that-pokemon)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
