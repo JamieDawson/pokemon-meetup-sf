@@ -1,47 +1,49 @@
-import { useEffect, useRef, useState } from 'react'
-import { fetchAvailablePokemon, type Pokemon } from '../lib/pokemon'
-import sunflowerHeader from '../assets/sunflower_header.jpg'
-import { PageShell } from '../components/PageShell'
+import { useEffect, useRef, useState } from "react";
+import { fetchAvailablePokemon, type Pokemon } from "../lib/pokemon";
+import sunflowerHeader from "../assets/sunflower_header.jpg";
+import { PageShell } from "../components/PageShell";
 
 export function HomePage() {
-  const [pokemon, setPokemon] = useState<Pokemon[]>([])
-  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
-  const [error, setError] = useState<string | null>(null)
-  const requestId = useRef(0)
+  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">(
+    "loading",
+  );
+  const [error, setError] = useState<string | null>(null);
+  const requestId = useRef(0);
 
   async function loadRoster(showLoading = true) {
-    const id = ++requestId.current
-    if (showLoading) setStatus('loading')
+    const id = ++requestId.current;
+    if (showLoading) setStatus("loading");
 
     try {
-      const roster = await fetchAvailablePokemon()
-      if (id !== requestId.current) return
-      setPokemon(roster)
-      setError(null)
-      setStatus('ready')
+      const roster = await fetchAvailablePokemon();
+      if (id !== requestId.current) return;
+      setPokemon(roster);
+      setError(null);
+      setStatus("ready");
     } catch (err: unknown) {
-      if (id !== requestId.current) return
-      setError(err instanceof Error ? err.message : 'Something went wrong')
-      setStatus('error')
+      if (id !== requestId.current) return;
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      setStatus("error");
     }
   }
 
   useEffect(() => {
-    void loadRoster(true)
+    void loadRoster(true);
 
     function onVisible() {
-      if (document.visibilityState === 'visible') void loadRoster(false)
+      if (document.visibilityState === "visible") void loadRoster(false);
     }
 
-    document.addEventListener('visibilitychange', onVisible)
-    window.addEventListener('focus', onVisible)
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("focus", onVisible);
 
     return () => {
-      requestId.current += 1
-      document.removeEventListener('visibilitychange', onVisible)
-      window.removeEventListener('focus', onVisible)
-    }
-  }, [])
+      requestId.current += 1;
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("focus", onVisible);
+    };
+  }, []);
 
   return (
     <PageShell active="home">
@@ -78,7 +80,7 @@ export function HomePage() {
           <p className="eyebrow">What&apos;s the plan?</p>
           <h2>Pokemon Cosplay! Photoshoots! And more!</h2>
           <p className="section-lede">
-            Hosted by{' '}
+            Hosted by{" "}
             <a
               className="text-link"
               href="https://www.instagram.com/sunflowercos"
@@ -86,8 +88,8 @@ export function HomePage() {
               rel="noreferrer"
             >
               Sunflowercos
-            </a>{' '}
-            with coordinators{' '}
+            </a>{" "}
+            with coordinators{" "}
             <a
               className="text-link"
               href="https://www.instagram.com/ai_mimichan/"
@@ -96,7 +98,7 @@ export function HomePage() {
             >
               Mimi
             </a>
-            ,{' '}
+            ,{" "}
             <a
               className="text-link"
               href="https://www.instagram.com/foreversonic/"
@@ -105,7 +107,7 @@ export function HomePage() {
             >
               Sonic
             </a>
-            ,{' '}
+            ,{" "}
             <a
               className="text-link"
               href="https://www.instagram.com/dame.cos/"
@@ -113,8 +115,8 @@ export function HomePage() {
               rel="noreferrer"
             >
               Dame
-            </a>{' '}
-            &{' '}
+            </a>{" "}
+            &{" "}
             <a
               className="text-link"
               href="https://www.instagram.com/poppylop_cos/"
@@ -144,25 +146,25 @@ export function HomePage() {
             </p>
           </div>
 
-          {status === 'loading' && (
+          {status === "loading" && (
             <p className="roster-status" role="status">
               Catching Pokémon…
             </p>
           )}
 
-          {status === 'error' && (
+          {status === "error" && (
             <p className="roster-status roster-error" role="alert">
-              {error ?? 'Could not load available Pokémon.'}
+              {error ?? "Could not load available Pokémon."}
             </p>
           )}
 
-          {status === 'ready' && pokemon.length === 0 && (
+          {status === "ready" && pokemon.length === 0 && (
             <p className="roster-status">
               Nobody available yet — check back soon!
             </p>
           )}
 
-          {status === 'ready' && pokemon.length > 0 && (
+          {status === "ready" && pokemon.length > 0 && (
             <ul className="roster-grid">
               {pokemon.map((entry, index) => (
                 <li
@@ -182,7 +184,7 @@ export function HomePage() {
                     </div>
                     <figcaption>
                       <span className="dex">
-                        #{String(entry.dex).padStart(3, '0')}
+                        #{String(entry.dex).padStart(3, "0")}
                       </span>
                       <span className="name">{entry.name}</span>
                     </figcaption>
@@ -197,7 +199,7 @@ export function HomePage() {
           <p className="eyebrow">How to join</p>
           <h2>Wanna cosplay with us?</h2>
           <p className="section-lede">
-            Three easy steps and you&apos;re in the crew. Hop in the{' '}
+            A few easy steps and you&apos;re in the crew. Hop in the{" "}
             <a
               className="text-link"
               href="https://discord.gg/CzZ5WZ4tJ"
@@ -205,14 +207,14 @@ export function HomePage() {
               rel="noreferrer"
             >
               Discord
-            </a>{' '}
+            </a>{" "}
             too!
           </p>
           <ol className="steps-list">
             <li>
               <strong>1. Pick a Pokémon</strong>
               <span>
-                Choose one from the{' '}
+                Choose one from the{" "}
                 <a className="text-link" href="#available">
                   Pokemon available in the list
                 </a>
@@ -222,7 +224,7 @@ export function HomePage() {
             <li>
               <strong>2. Message Sunflower</strong>
               <span>
-                Hit up{' '}
+                Hit up{" "}
                 <a
                   className="text-link"
                   href="https://www.instagram.com/sunflowercos"
@@ -230,7 +232,7 @@ export function HomePage() {
                   rel="noreferrer"
                 >
                   @sunflowercos
-                </a>{' '}
+                </a>{" "}
                 on Instagram to request it. You can join the Instagram Chat
                 and/or Discord after.
               </span>
@@ -238,7 +240,7 @@ export function HomePage() {
             <li>
               <strong>3. Grab your ticket</strong>
               <span>
-                Buy tickets on the{' '}
+                Buy tickets on the{" "}
                 <a
                   className="text-link"
                   href="https://www.eventbrite.com/e/sunflowers-151-event-tickets-1992097300652/protected?aff=oddtdtcreator&utm_source=email&utm_medium=sparkpost&utm_campaign=postpublish"
@@ -246,9 +248,24 @@ export function HomePage() {
                   rel="noreferrer"
                 >
                   Eventbrite page
-                </a>{' '}
+                </a>{" "}
                 You&apos;ll get the code for the event page after you message
                 Sunflower.
+              </span>
+            </li>
+            <li>
+              <strong>4. Wanna help the event?</strong>
+              <span>
+                Update{" "}
+                <a
+                  className="text-link"
+                  href="https://docs.google.com/spreadsheets/d/1gGgvkBuxFtDgiyk5ExJrWmSIFUKwFf2Mhzj0zaIK0mQ/edit?gid=0#gid=0"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  this doc
+                </a>{" "}
+                to let us know what you can bring to the event.
               </span>
             </li>
           </ol>
@@ -311,5 +328,5 @@ export function HomePage() {
         </footer>
       </main>
     </PageShell>
-  )
+  );
 }
