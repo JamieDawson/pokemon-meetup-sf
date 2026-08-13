@@ -55,6 +55,10 @@
   color: var(--poke-red);
 }
 
+.nav-active {
+  color: var(--poke-red);
+}
+
 .shell {
   position: relative;
   z-index: 1;
@@ -417,6 +421,23 @@
   font-weight: 650;
   font-size: 1.08rem;
   color: var(--ink);
+}
+
+.cosplayer-name {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--poke-red);
+}
+
+.cosplayer-unknown {
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.claimed-intro .btn {
+  margin-top: 1rem;
 }
 
 .join .btn {
