@@ -1,16 +1,18 @@
-# 🌻 Sunflower's 151 — Bay Area's Largest Pokémon Cosplay Meetup
+# Sunflower's 151: Bay Area's Largest Pokémon Cosplay Meetup
 
 I built this site for **Sunflower's 151**, a fan-made Pokémon cosplay meetup happening in the SF Bay Area.
 
-The idea is pretty simple: **hundreds of people are dressing up as Pokémon, and the site lets everyone see which Pokémon are still available to cosplay.** 🎃⚡
+The idea is pretty simple: **hundreds of people are dressing up as Pokémon, and the site lets everyone see which Pokémon are still available to cosplay.**
 
 I wanted to make something that was actually useful for the meetup instead of just making another event page. The site pulls its data directly from Google Sheets, so the organizers can update Pokémon availability without having to touch the code.
 
 **Unofficial fan project. Not affiliated with Nintendo or The Pokémon Company.**
 
+[Click here to see the website](sunflower-151.netlify.app)
+
 ## 🎮 What I Built
 
-### 🌻 Landing Page
+### Landing Page
 
 The landing page gives you the event info right away, with a big call to join and links to explore the Pokémon lineup.
 
