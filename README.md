@@ -1,66 +1,90 @@
-# Sunflower's 151
+# 🌻 Sunflower's 151 — Bay Area's Largest Pokémon Cosplay Meetup
 
-Website for **Sunflower's 151** — a fanmade Pokémon cosplay meetup in the SF Bay Area.
+I built this site for **Sunflower's 151**, a fan-made Pokémon cosplay meetup happening in the SF Bay Area.
 
-Unofficial. Not affiliated with Nintendo or The Pokémon Company.
+The idea is pretty simple: **hundreds of people are dressing up as Pokémon, and the site lets everyone see which Pokémon are still available to cosplay.** 🎃⚡
 
-## What the site looks like
+I wanted to make something that was actually useful for the meetup instead of just making another event page. The site pulls its data directly from Google Sheets, so the organizers can update Pokémon availability without having to touch the code.
 
-### 1) First thing you see
+**Unofficial fan project. Not affiliated with Nintendo or The Pokémon Company.**
 
-The landing page — event name, the big “come join” message, and buttons to jump in.
+## 🎮 What I Built
+
+### 🌻 Landing Page
+
+The landing page gives you the event info right away, with a big call to join and links to explore the Pokémon lineup.
 
 ![First thing users see when the page loads](./src/assets/sunflower-1.png)
 
-### 2) Pokemon availability
+### ⚡ Pokémon Still Available
 
-The home page list of Pokémon still marked available (`TRUE` in the sheet).
+This page shows all of the Pokémon that are still available to cosplay.
+
+The organizers can simply change the `available` value in the Google Sheet and the site updates automatically.
 
 ![Pokemon availability](./src/assets/sunflower-2.png)
 
-### 3) Which can be cosplayed
+### 👀 Who's That Pokémon?
 
-The **Who's that Pokemon** page — Pokémon that are already taken (`FALSE`), with the cosplayer’s Instagram handle under each one.
+Once a Pokémon has been claimed, it moves over to the **Who's That Pokémon?** page.
+
+The site matches the Pokémon to the cosplayer's Instagram handle so people can see who's taking on each character.
 
 ![Which Pokemon can be cosplayed / already claimed](./src/assets/sunflower-3.png)
 
-## How the spreadsheet data works
+## 📊 Powered by Google Sheets
 
-Two Google Sheets power the whole site. The app pulls both, then combines them.
+One of the things I wanted to do with this project was keep the organizers completely out of the code.
 
-**Sheet 1 — availability**  
-Dex #, Pokémon name, `available` (TRUE/FALSE), image URL.
+The site uses **two Google Sheets** as its data source:
 
-**Sheet 2 — cosplayers**  
-Pokémon name + Instagram handle (and other signup info).
+**Sheet 1 — Pokémon availability**
 
-How it gets used together:
+- National Dex #
+- Pokémon name
+- `available` (`TRUE` / `FALSE`)
+- Image URL
 
-1. Site fetches both sheets (through a proxy so the browser can read them).
-2. `TRUE` rows from Sheet 1 → **Pokemon available** on the home page.
-3. `FALSE` rows from Sheet 1 → **Who's that Pokemon** page.
-4. For those `FALSE` ones, the site matches the Pokémon name to Sheet 2 and shows the IG handle.
-5. Extra Sheet 2 rows that aren’t real Sheet 1 Pokémon (Nurse Joy, Rocket Grunt, etc.) get ignored.
+**Sheet 2 — Cosplayers**
 
-Flip `TRUE`/`FALSE` in Sheet 1 and the lists update next time the page loads (or when someone comes back to the tab).
+- Pokémon name
+- Instagram handle
+- Signup information
 
-## Event basics
+The React app pulls both sheets and combines the data:
 
-- **When:** September 13, 12pm–7pm (doors 11:30am)
-- **Where:** South San Francisco (full address after signup)
-- **Who:** 18+, ticket required
+1. Fetch the Pokémon availability sheet.
+2. Fetch the cosplayer sheet.
+3. `TRUE` Pokémon → show them as **available**.
+4. `FALSE` Pokémon → move them to **Who's That Pokémon?**
+5. Match claimed Pokémon with the cosplayer's Instagram handle.
+6. Ignore signup entries that aren't Pokémon, like Nurse Joy or Team Rocket Grunts.
+
+So if someone claims Pikachu, the organizer only needs to change Pikachu from `TRUE` to `FALSE` in the spreadsheet.
+
+**No code changes required.**
+
+## 🛠️ Built With
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Google Sheets
+- Netlify
+
+## 🎟️ Event
+
+- **When:** September 13, 12pm–7pm
+- **Doors:** 11:30am
+- **Where:** South San Francisco
+- **Who:** 18+
+- **Ticket:** Required
 - **Host:** [Sunflowercos](https://www.instagram.com/sunflowercos) + Mimi, Sonic, Dame & Poppy
 
-## Run it locally
+## 🚀 Run It Locally
 
 ```bash
 npm install
 npm run dev
 ```
-
-## Deploy (Netlify)
-
-- Build: `npm run build`
-- Publish: `dist`
-
-`netlify.toml` proxies the sheets and handles routes like `/whos-that-pokemon`.
