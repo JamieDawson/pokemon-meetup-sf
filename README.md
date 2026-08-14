@@ -1,80 +1,66 @@
 # Sunflower's 151
 
-This is the website for **Sunflower's 151** — a fanmade Pokémon cosplay meetup in the SF Bay Area.
+Website for **Sunflower's 151** — a fanmade Pokémon cosplay meetup in the SF Bay Area.
 
-It's unofficial. Not affiliated with Nintendo or The Pokémon Company. Just a bunch of people cosplaying Pokémon and hanging out.
+Unofficial. Not affiliated with Nintendo or The Pokémon Company.
 
-## The event (quick version)
+## What the site looks like
 
-- **When:** September 13, 12pm–7pm (doors at 11:30am)
-- **Where:** South San Francisco (full address goes out after you sign up)
-- **Who:** 18+, you need a ticket
-- **Host:** [Sunflowercos](https://www.instagram.com/sunflowercos), with help from Mimi, Sonic, Dame & Poppy
+### 1) First thing you see
 
-## What's on the site
+The landing page — event name, the big “come join” message, and buttons to jump in.
 
-### Home page
+![First thing users see when the page loads](./src/assets/sunflower-1.png)
 
-Basically the main promo page. It has:
+### 2) Pokemon availability
 
-- What the event is about
-- What's happening that day (photos, sets, snacks, etc.)
-- Which Pokémon are still up for grabs
-- How to join
-- Links to Instagram, Eventbrite, and Discord
+The home page list of Pokémon still marked available (`TRUE` in the sheet).
 
-### Who's that Pokemon page
+![Pokemon availability](./src/assets/sunflower-2.png)
 
-This one's for Pokémon that are already taken.
+### 3) Which can be cosplayed
 
-It pulls everything marked `FALSE` (not available) and shows the cosplayer's Instagram handle under each one. So you can see who's who.
+The **Who's that Pokemon** page — Pokémon that are already taken (`FALSE`), with the cosplayer’s Instagram handle under each one.
 
-## How the Google Sheets work
+![Which Pokemon can be cosplayed / already claimed](./src/assets/sunflower-3.png)
 
-There are two spreadsheets driving this thing.
+## How the spreadsheet data works
 
-### Sheet 1 — available or not
+Two Google Sheets power the whole site. The app pulls both, then combines them.
 
-Columns are basically:
+**Sheet 1 — availability**  
+Dex #, Pokémon name, `available` (TRUE/FALSE), image URL.
 
-- National Dex #
-- Pokémon name
-- available (`TRUE` / `FALSE`)
-- Image URL
+**Sheet 2 — cosplayers**  
+Pokémon name + Instagram handle (and other signup info).
 
-If it's `TRUE`, it shows up on the home page.  
-If it's `FALSE`, it shows up on Who's that Pokemon.
+How it gets used together:
 
-Flip a value in the sheet and the site picks it up next time someone loads the page (or comes back to the tab).
+1. Site fetches both sheets (through a proxy so the browser can read them).
+2. `TRUE` rows from Sheet 1 → **Pokemon available** on the home page.
+3. `FALSE` rows from Sheet 1 → **Who's that Pokemon** page.
+4. For those `FALSE` ones, the site matches the Pokémon name to Sheet 2 and shows the IG handle.
+5. Extra Sheet 2 rows that aren’t real Sheet 1 Pokémon (Nurse Joy, Rocket Grunt, etc.) get ignored.
 
-### Sheet 2 — cosplayer names
+Flip `TRUE`/`FALSE` in Sheet 1 and the lists update next time the page loads (or when someone comes back to the tab).
 
-This one has the IG tags and preferred names.
+## Event basics
 
-The site matches people to Pokémon by name from Sheet 1. Stuff that isn't in Sheet 1 (Nurse Joy, Rocket Grunt, etc.) gets ignored on purpose.
+- **When:** September 13, 12pm–7pm (doors 11:30am)
+- **Where:** South San Francisco (full address after signup)
+- **Who:** 18+, ticket required
+- **Host:** [Sunflowercos](https://www.instagram.com/sunflowercos) + Mimi, Sonic, Dame & Poppy
 
-On the Who's that Pokemon page, we show the **IG handle**, not the preferred name.
-
-## Tech stuff
-
-- React + Vite + TypeScript
-- React Router (so we can have more than one page)
-- Google Sheets as the "database"
-- Locally, Vite proxies the sheets so data stays fresh
-- On Netlify, `netlify.toml` does the same proxy thing (this is important — without it, live updates and IG handles break in production)
-
-## Running it locally
+## Run it locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Then open whatever URL Vite gives you (usually `http://localhost:5173/`).
+## Deploy (Netlify)
 
-## Deploying on Netlify
+- Build: `npm run build`
+- Publish: `dist`
 
-- Build command: `npm run build`
-- Publish folder: `dist`
-
-`netlify.toml` already handles the sheet proxies and the SPA routes like `/whos-that-pokemon`.
+`netlify.toml` proxies the sheets and handles routes like `/whos-that-pokemon`.
