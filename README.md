@@ -8,7 +8,7 @@ I wanted to make something that was actually useful for the meetup instead of ju
 
 **Unofficial fan project. Not affiliated with Nintendo or The Pokémon Company.**
 
-[Click here to see the website](sunflower-151.netlify.app)
+[Click here to see the website](https://sunflower-151.netlify.app)
 
 ## 🎮 What I Built
 
